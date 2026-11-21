@@ -227,10 +227,17 @@
         <p>That mapping is just one option. Any audio property (pitch, amplitude, attack, decay, presence) can drive any visual one (hue, value, saturation, pressure, size, shape). Two people can collaborate, one singing and one sketching. An artist can sing along with a recording and let the song shape the picture. Children can explore color and music together.</p>
         <div class="demo">
           <div class="canvas-band"><canvas aria-hidden="true"></canvas></div>
-          <div class="demo-note">
-            <p>Try a simple version here. Draw in the box: height stands in for pitch, so low strokes come out red and high strokes blue.</p>
+          <div class="scale-row" aria-hidden="true">
+            <span>Low</span>
+            <div class="pitch-scale"><span class="pitch-marker"></span></div>
+            <span>High</span>
+          </div>
+          <div class="demo-bar">
+            <button class="btn solid" id="mic-toggle" type="button" aria-pressed="false">Turn on microphone</button>
+            <span class="voice-note" aria-hidden="true"></span>
             <button class="link-btn" id="clear-drawing" type="button">Clear</button>
           </div>
+          <p class="demo-note" id="mic-status" aria-live="polite">Turn on the microphone and sing while you draw. Low notes paint red and high notes paint blue. Sing louder for a thicker line. Until then, the height of your stroke stands in for pitch. Your audio stays in your browser and is never recorded or sent.</p>
         </div>
         <h3>Selected work</h3>
         <ul class="cites">

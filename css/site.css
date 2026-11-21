@@ -259,8 +259,23 @@ figcaption { font: 14.5px/1.45 var(--sans); color: var(--muted); margin-top: 8px
 .demo { margin: 24px 0 8px; }
 .canvas-band { position: relative; height: 280px; touch-action: none; cursor: crosshair; border: 1px solid var(--rule); background: var(--bg); }
 .canvas-band canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.demo-note { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; font: 15px/1.5 var(--sans); color: var(--muted); margin-top: 8px; }
-.demo-note p { margin: 0; }
+.scale-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; font: 13px/1 var(--sans); color: var(--muted); }
+.pitch-scale { position: relative; flex: 1; height: 6px; border-radius: 3px; background: var(--rule); }
+.pitch-marker {
+  position: absolute; top: 50%; left: 0; width: 16px; height: 16px; border-radius: 50%;
+  transform: translate(-50%, -50%); border: 3px solid var(--bg); box-shadow: 0 0 0 1px var(--ink);
+  opacity: 0; transition: left 80ms linear, opacity 150ms;
+}
+.demo.singing .pitch-marker { opacity: 1; }
+.demo-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 14px; font: 15px/1.4 var(--sans); }
+.demo-bar .btn[disabled] { opacity: .55; cursor: default; }
+.voice-note { display: none; min-width: 5.4em; font: 600 16px/1 var(--sans); font-variant-numeric: tabular-nums; color: var(--ink); }
+.demo.listening .voice-note { display: inline-block; }
+.demo.listening:not(.singing) .voice-note { font-weight: 400; color: var(--muted); }
+#clear-drawing { margin-left: auto; }
+.demo-note { font: 15px/1.55 var(--sans); color: var(--muted); margin: 10px 0 0; max-width: 62ch; }
+@media (max-width: 600px) { .demo-bar { gap: 8px 12px; } .demo-bar .btn { padding: 0 16px; } }
+@media (prefers-reduced-motion: reduce) { .pitch-marker { transition: none; } }
 .link-btn {
   font: inherit; color: var(--brand); background: none; border: 0; padding: 0 2px;
   min-height: 44px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer;

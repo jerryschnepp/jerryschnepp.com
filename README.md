@@ -9,4 +9,5 @@ Plain HTML and CSS, no build step. Edit a page and push to `main`; GitHub Pages 
 - `js/filter.js`: the filter chips and search on Publications and Talks. `js/sketch.js`: the Sing N Sketch demo on Research.
 - `img/`, `fonts/`, `slides/`: images, self-hosted fonts (Literata and Public Sans, SIL Open Font License), and posted slide decks.
 - `home/`, `interests/`, `projects/`, `research/`, `service/`: redirects from the old Google Sites addresses to the new pages. Leave these in place so old links keep working.
+- `cv.pdf`: the CV linked from the menu, footer, and home page. To update it, upload a new PDF with the same name (Add file, then Upload files) and it replaces the old one.
 - `CNAME`: the custom domain. `.nojekyll` tells GitHub Pages to serve the files as they are.

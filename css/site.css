@@ -274,6 +274,7 @@ figcaption { font: 14.5px/1.45 var(--sans); color: var(--muted); margin-top: 8px
 .demo.listening:not(.singing) .voice-note { font-weight: 400; color: var(--muted); }
 #clear-drawing { margin-left: auto; }
 .demo-note { font: 15px/1.55 var(--sans); color: var(--muted); margin: 10px 0 0; max-width: 62ch; }
+.demo-note.problem { color: var(--ink); border-left: 3px solid #c2410c; padding-left: 12px; }
 @media (max-width: 600px) { .demo-bar { gap: 8px 12px; } .demo-bar .btn { padding: 0 16px; } }
 @media (prefers-reduced-motion: reduce) { .pitch-marker { transition: none; } }
 .link-btn {

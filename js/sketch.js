@@ -279,14 +279,19 @@
       unsupported: "This browser can't use the microphone here, so height stands in for pitch.",
       failed: "The microphone didn't start, so height stands in for pitch. Check that one is connected, then try again.",
     };
+    const PROBLEMS = ["blocked", "unsupported", "failed"];
     function setState(state) {
       const on = state === "on";
+      const problem = PROBLEMS.includes(state);
       demo.classList.toggle("listening", on);
       if (!on) demo.classList.remove("singing");
-      if (status) status.textContent = MESSAGES[state];
+      if (status) {
+        status.textContent = MESSAGES[state];
+        status.classList.toggle("problem", problem);
+      }
       if (micBtn) {
         micBtn.disabled = state === "asking" || state === "unsupported";
-        micBtn.textContent = on ? "Turn off microphone" : "Turn on microphone";
+        micBtn.textContent = on ? "Turn off microphone" : state === "asking" ? "Starting microphone" : problem ? "Try microphone again" : "Turn on microphone";
         micBtn.classList.toggle("solid", !on);
         micBtn.setAttribute("aria-pressed", String(on));
       }
@@ -296,8 +301,15 @@
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { setState("unsupported"); return; }
       // Create the audio context inside the click so mobile Safari allows it.
-      const ac = new AC();
-      ac.resume();
+      let ac;
+      try {
+        ac = new AC();
+        ac.resume();
+      } catch (err) {
+        console.warn("Sing N Sketch: audio could not start.", err);
+        setState("failed");
+        return;
+      }
       setState("asking");
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -313,6 +325,7 @@
         showVoice();
         listen();
       } catch (err) {
+        console.warn("Sing N Sketch: microphone did not start.", err);
         ac.close();
         const name = err && err.name;
         setState(name === "NotAllowedError" || name === "SecurityError" ? "blocked" : "failed");

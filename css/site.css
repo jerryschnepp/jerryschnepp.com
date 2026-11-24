@@ -4,9 +4,9 @@
           and a band of current roles, then calm, well-set text.
   PICTURE Portrait in the hero; a deep band listing the three current roles;
           documentary photos of teaching and each research project.
-  COLOUR  White paper and ink, a neutral charcoal field (#2a2c2f), and Roosevelt-inspired
-          greens: a strong green for links and buttons (#006b45) and the lighter logo
-          green (#73c167) for thin accent lines on the charcoal.
+  COLOUR  Dark only. A near-black page (#18191a) with light ink, a neutral charcoal field
+          (#252628) for the roles band and footer, and Roosevelt-inspired greens: a soft
+          green for links and buttons (#7fd08f) and the logo green (#73c167) for accent lines.
   TYPE    Literata (a book serif) for headings and reading; Public Sans (an institutional
           sans) for navigation, labels, and buttons. Dates are set in Literata figures.
   LAYOUT  Left-aligned, 1200px max. Hanging dates for anything dated.
@@ -44,16 +44,17 @@
   src: url(../fonts/public-sans-variable-italic.woff2) format("woff2-variations"), url(../fonts/public-sans-variable-italic.woff2) format("woff2");
 }
 
+/* The site is dark only: the same colors show whatever the visitor's system setting is. */
 :root {
-  color-scheme: light dark;
-  --bg: light-dark(#ffffff, #18191a);
-  --ink: light-dark(#17181a, #ececea);
-  --muted: light-dark(#5c5f66, #a9abaf);
-  --rule: light-dark(#dfe1e4, #333538);
-  --wash: light-dark(#f4f5f6, #202123);
-  --brand: light-dark(#006b45, #7fd08f);
-  --accent: light-dark(#008852, #73c167);
-  --field: light-dark(#2a2c2f, #252628);
+  color-scheme: dark;
+  --bg: #18191a;
+  --ink: #ececea;
+  --muted: #a9abaf;
+  --rule: #333538;
+  --wash: #202123;
+  --brand: #7fd08f;
+  --accent: #73c167;
+  --field: #252628;
   --field-ink: #f3f3f2;
   --field-muted: #b5b8bc;
   --field-rule: #45484d;
@@ -63,8 +64,6 @@
   --max: 1200px;
   --pad: max(5vw, 18px);
 }
-:root[data-theme="light"] { color-scheme: light; }
-:root[data-theme="dark"] { color-scheme: dark; }
 
 *, *::before, *::after { box-sizing: border-box; min-width: 0; }
 html { scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; }
@@ -368,6 +367,12 @@ figcaption { font: 14.5px/1.45 var(--sans); color: var(--muted); margin-top: 8px
   .canvas-band { height: 220px; }
 }
 @media print {
+  /* Paper is white, so print in dark ink. */
+  :root {
+    color-scheme: light;
+    --bg: #ffffff; --ink: #17181a; --muted: #5c5f66; --rule: #dfe1e4;
+    --wash: #f4f5f6; --brand: #006b45; --accent: #008852;
+  }
   .site-head, .site-foot, .filter-bar, .index-bar, .demo { display: none !important; }
   body { font-size: 11pt; }
   a { color: inherit; }

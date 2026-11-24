@@ -16,7 +16,6 @@
     const marker = demo.querySelector(".pitch-marker");
     const noteOut = demo.querySelector(".voice-note");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
     let W = 0, H = 0, size = 1;
     let auto = [];            // opening strokes; points are {x, y, w, t} with x, y in 0..1
     let user = [];            // visitor strokes, same format
@@ -24,22 +23,18 @@
     let active = null, last = null;
 
     const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-    const isDark = () => {
-      const t = document.documentElement.dataset.theme;
-      return t ? t === "dark" : prefersDark.matches;
-    };
 
     // ---- Pitch to color -------------------------------------------------
     // t runs 0..1 across the singing range, low to high, on a log scale.
     const LOW_HZ = 100, HIGH_HZ = 900;
     const pitchT = (hz) => clamp(Math.log2(hz / LOW_HZ) / Math.log2(HIGH_HZ / LOW_HZ), 0, 1);
-    // Red through orange, yellow and green to blue. Yellows and greens are
-    // darkened a little so they hold up on a white page.
+    // Red through orange, yellow and green to blue, light enough to read on
+    // the site's dark page. Yellows and greens are dimmed a little.
     const color = (t) => {
-      if (t == null) return isDark() ? "hsl(220 4% 52%)" : "hsl(220 4% 66%)";
+      if (t == null) return "hsl(220 4% 52%)";
       const h = t * 230;
       const dip = Math.exp(-(((h - 95) / 45) ** 2));
-      const l = isDark() ? 64 - 4 * dip : 50 - 12 * dip;
+      const l = 64 - 4 * dip;
       return `hsl(${h.toFixed(1)} 80% ${l.toFixed(1)}%)`;
     };
     const NOTES = ["C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯", "A", "A♯", "B"];
@@ -352,10 +347,6 @@
     // ---- Start ----------------------------------------------------------
     const ro = new ResizeObserver(() => resize());
     ro.observe(band);
-    const recolor = () => { paintScale(); draw(); if (audio) showVoice(); };
-    prefersDark.addEventListener("change", recolor);
-    new MutationObserver(recolor).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-
     paintScale();
     resize();
     if (!reduce) animate(performance.now());
